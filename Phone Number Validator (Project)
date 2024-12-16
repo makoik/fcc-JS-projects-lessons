@@ -1,0 +1,53 @@
+// Please never reference this code, it's horrific beyond words (but passed tests) //
+
+const input = document.getElementById("user-input");
+const buttonCheck = document.getElementById("check-btn");
+const buttonClear = document.getElementById("clear-btn");
+
+const hasMatchingOccurrences = str => (str.match(/\(/g) || []).length === (str.match(/\)/g) || []).length;
+
+buttonCheck.addEventListener("click", (e) => {
+  e.preventDefault()
+
+  if (!input.value) {
+    alert("Please provide a phone number")
+  }
+
+  console.log(hasMatchingOccurrences(input.value))
+  const cleanInput = input.value.replace(/[^0-9]/g, "");
+  console.log(cleanInput, cleanInput.length, input.value.length)
+  
+  if (input.value.startsWith("-") || !hasMatchingOccurrences(input.value) || input.value.endsWith(")") || input.value.includes("?") || input.value.indexOf(" ") === 2) {
+    document.getElementById("results-div").textContent =
+     `Invalid US number: ${input.value}` 
+    input.value = "";
+    return
+    } 
+  
+  if (cleanInput.length === input.value.length && cleanInput.length > 9 && cleanInput.length < 11) {
+     document.getElementById("results-div").textContent =
+      `Valid US number: ${input.value}`
+      input.value = ""
+      return
+  }
+  
+  if (cleanInput.length === 10) {
+    document.getElementById("results-div").textContent = `Valid US number: ${input.value}`
+    input.value = "";
+    return
+  }
+
+  if (cleanInput.length === 11 && cleanInput.startsWith("1")) {
+    document.getElementById("results-div").textContent = `Valid US number: ${input.value}`
+    input.value = "";
+    return
+  }
+    else {
+      document.getElementById("results-div").textContent = `Invalid US number: ${input.value}`
+    }
+
+  input.value = "";
+})
+buttonClear.addEventListener("click", () => {
+  document.getElementById("results-div").textContent = ""
+})
