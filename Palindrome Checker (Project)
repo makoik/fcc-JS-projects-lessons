@@ -1,0 +1,62 @@
+const word = document.getElementById("text-input");
+const result = document.getElementById("result");
+
+function cleanInputString(str) {
+  const lword = str.toLowerCase()
+  const regex = /[_\W\s]/g;
+  return lword.replace(regex, '');
+}
+
+const checker = (str) => {
+  const cleanword = cleanInputString(str);
+  let reverseword = cleanword.split('').reverse().join('')
+  
+  if (cleanword === reverseword) {
+    result.innerHTML = `<p>${str} is a palindrome</p>`
+    result.classList.remove("hide")
+  } else {
+    result.innerHTML = `<p> ${str} is not a palindrome.`
+    result.classList.remove("hide")
+  }
+}
+document.getElementById("palindrome-checker").addEventListener("submit", (e) => {
+  e.preventDefault();
+  if (word.value.trim() === "") {
+    alert("Please input a value");
+    return;
+  }
+
+  checker(word.value);
+});
+
+
+
+
+
+	//			HTML part
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="uft-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Palindrome Checker</title>
+  </head>
+  <body>
+    <main>
+      <h1>Palindrome Checker</h1>
+      <p>Is your word a palindrome?</p>
+        <form id="palindrome-checker">
+          <label for="text-input">Enter a word: 
+            <input name="text-input" type="text" id="text-input" />
+            <button type="submit" id="check-btn">Submit</button>
+          </label>
+        </form>
+        <div id="result" class="result hide"></div>
+    </main>
+    <script src="./script.js"></script>
+  </body>
+</html>
