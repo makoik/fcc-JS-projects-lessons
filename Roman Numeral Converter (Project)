@@ -1,0 +1,68 @@
+
+const roNumber = document.getElementById("number");
+const output = document.getElementById("output");
+
+const numTable = {
+  m: 1000,
+  cm: 900,
+  d: 500,
+  cd: 400,
+  c: 100,
+  xc: 90,
+  l: 50,
+  xl: 40,
+  x: 10,
+  ix: 9,
+  v: 5,
+  iv: 4,
+  i: 1
+}
+
+
+const converter = (num) => {
+  let result = ""
+  let remainder = num
+  
+  while (remainder > 0) {
+    for (const [key, val] of Object.entries(numTable)) {
+      if (remainder >= val) {
+        remainder -= val;
+        result += key;
+        break;
+      }
+    }  
+  }
+  return result.toUpperCase()
+};
+
+
+document.getElementById("converter").addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  if (roNumber.value === "") {
+    output.innerHTML = `<p>Please enter a valid number</p>`;
+    return;
+  }
+
+  const numVal = parseInt(roNumber.value, 10);
+
+  if (numVal < 1) {
+    output.innerHTML = `<p>Please enter a number greater than or equal to 1</p>`
+    return;
+  }
+
+  if(numVal > 3999) {
+    output.innerHTML = `<p>Please enter a number less than or equal to 3999</p>`
+    return;
+  } 
+
+  const roNum = converter(numVal);
+  output.innerHTML = `<p>${roNum}</p>`
+});
+
+
+numberInput.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+     checkUserInput();
+  }
+});
